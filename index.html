@@ -20,17 +20,23 @@
 
     <div class="actions">
       <a href="notes.html" class="button">Open Notes 💌</a>
+
+      <!-- 🎶 Custom Play Button -->
+      <button class="button play-btn" onclick="scrollToSong()">
+        ▶ Play Song 🎶
+      </button>
     </div>
 
-    <!-- 🎧 Spotify Embed (ONLY MUSIC SOURCE) -->
-    <section class="music-embed">
-      <h2>🔥 Karn Aujla Vibes 🔥</h2>
+    <!-- 🎧 Spotify Embed (Single Song) -->
+    <section class="music-embed glow" id="song">
+      <h2>🎶💖</h2>
 
       <iframe
+        data-testid="embed-iframe"
         style="border-radius:12px"
-        src="https://open.spotify.com/embed/artist/4fEkbug6kZzzJ8eYX6Kbbp"
+        src="https://open.spotify.com/embed/track/0cYohCh24y1aMjJmcS9RBl?utm_source=generator"
         width="100%"
-        height="380"
+        height="352"
         frameborder="0"
         loading="lazy"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
@@ -38,7 +44,17 @@
     </section>
   </div>
 
-  <!-- ❄️ Snow animation only -->
+  <!-- ❄️ Snow animation -->
   <script src="script.js"></script>
+
+  <!-- Scroll helper -->
+  <script>
+    function scrollToSong() {
+      document.getElementById("song").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  </script>
 </body>
 </html>
