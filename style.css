@@ -68,15 +68,53 @@ p {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-/* Music toggle button (shares .button styles) */
+/* 🎧 PLAY MUSIC BUTTON (GLOW EFFECT) */
 .music-toggle {
-  margin-left: 12px;
-  padding-left: 18px;
-  padding-right: 18px;
-  background: linear-gradient(90deg, #ff8a65, #c62828);
+  margin-top: 20px;
+  padding: 15px 38px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #ff5252, #c62828);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  animation: glowPulse 2.2s infinite;
+  box-shadow: 0 0 15px rgba(198,40,40,0.6);
 }
+
+/* Glow animation */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 10px rgba(198,40,40,0.5);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(255,82,82,0.95);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(198,40,40,0.5);
+  }
+}
+
 .music-toggle:hover {
-  transform: scale(1.06) rotate(-0.5deg);
+  transform: scale(1.07);
+}
+
+/* Tap effect for mobile */
+.music-toggle:active {
+  transform: scale(0.95);
+}
+
+/* 🎶 Spotify embed container */
+.music-embed {
+  margin-top: 35px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 35px rgba(0,0,0,0.15);
 }
 
 /* Notes */
@@ -135,9 +173,14 @@ p {
   z-index: 999;
 }
 
-/* Mobile tweaks */
+/* 📱 Mobile tweaks */
 @media (max-width: 480px) {
   .container {
     padding: 60px 16px;
+  }
+
+  .music-toggle {
+    width: 100%;
+    font-size: 1rem;
   }
 }
