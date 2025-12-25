@@ -1,4 +1,5 @@
-/* ❄️ Snow Animation */
+// ❄️ Snow Animation Only (No Music)
+
 const canvas = document.createElement("canvas");
 canvas.className = "snow";
 document.body.appendChild(canvas);
@@ -19,7 +20,7 @@ function createFlakes() {
     x: Math.random() * w,
     y: Math.random() * h,
     r: Math.random() * 3 + 1,
-    speed: Math.random() * 1 + 0.5
+    speed: Math.random() * 1 + 0.6
   }));
 }
 createFlakes();
@@ -31,8 +32,10 @@ function draw() {
     ctx.beginPath();
     ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
     ctx.fill();
+
     f.y += f.speed;
     f.x += Math.sin(f.y * 0.01);
+
     if (f.y > h) {
       f.y = -5;
       f.x = Math.random() * w;
@@ -41,40 +44,3 @@ function draw() {
   requestAnimationFrame(draw);
 }
 draw();
-
-/* 🎵 Background Music */
-const bgm = new Audio("assets/bgm.mp3");
-bgm.loop = true;
-bgm.volume = 0.28;
-
-let musicPlaying = false;
-
-function updateBtn() {
-  const btn = document.getElementById("music-toggle");
-  btn.textContent = musicPlaying ? "🔊 Music ON" : "🔈 Music OFF";
-}
-
-function toggleMusic() {
-  if (musicPlaying) {
-    bgm.pause();
-    musicPlaying = false;
-    localStorage.setItem("bgm", "0");
-  } else {
-    bgm.play().then(() => {
-      musicPlaying = true;
-      localStorage.setItem("bgm", "1");
-    });
-  }
-  updateBtn();
-}
-
-document.getElementById("music-toggle").addEventListener("click", toggleMusic);
-
-if (localStorage.getItem("bgm") === "1") {
-  window.addEventListener("click", () => {
-    bgm.play().then(() => {
-      musicPlaying = true;
-      updateBtn();
-    });
-  }, { once: true });
-}
