@@ -1,3 +1,4 @@
+/* ❄️ Snow Animation */
 const canvas = document.createElement("canvas");
 canvas.className = "snow";
 document.body.appendChild(canvas);
@@ -41,61 +42,39 @@ function draw() {
 }
 draw();
 
-// Background music controls
-const bgm = new Audio();
-bgm.src = 'assets/bgm.mp3';
+/* 🎵 Background Music */
+const bgm = new Audio("assets/bgm.mp3");
 bgm.loop = true;
 bgm.volume = 0.28;
-bgm.preload = 'auto';
+
 let musicPlaying = false;
 
-function updateMusicButton() {
-  const btn = document.getElementById('music-toggle');
-  if (!btn) return;
-  btn.textContent = musicPlaying ? '🔊 Music ON' : '🔈 Music OFF';
-  btn.setAttribute('aria-pressed', musicPlaying ? 'true' : 'false');
-}
-
-function playMusic() {
-  bgm.play().then(() => {
-    musicPlaying = true;
-    updateMusicButton();
-    localStorage.setItem('bgmPlaying', '1');
-  }).catch(() => {
-    // Autoplay blocked; wait for user interaction
-    musicPlaying = false;
-    updateMusicButton();
-  });
-}
-
-function pauseMusic() {
-  bgm.pause();
-  musicPlaying = false;
-  updateMusicButton();
-  localStorage.setItem('bgmPlaying', '0');
+function updateBtn() {
+  const btn = document.getElementById("music-toggle");
+  btn.textContent = musicPlaying ? "🔊 Music ON" : "🔈 Music OFF";
 }
 
 function toggleMusic() {
-  if (musicPlaying) pauseMusic(); else playMusic();
+  if (musicPlaying) {
+    bgm.pause();
+    musicPlaying = false;
+    localStorage.setItem("bgm", "0");
+  } else {
+    bgm.play().then(() => {
+      musicPlaying = true;
+      localStorage.setItem("bgm", "1");
+    });
+  }
+  updateBtn();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('music-toggle');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    toggleMusic();
-  });
+document.getElementById("music-toggle").addEventListener("click", toggleMusic);
 
-  // Restore preference if user previously enabled music
-  const saved = localStorage.getItem('bgmPlaying');
-  if (saved === '1') {
-    // Many browsers block autoplay; try to play on first user gesture
-    const tryPlay = () => {
-      playMusic();
-      window.removeEventListener('click', tryPlay);
-    };
-    window.addEventListener('click', tryPlay);
-  } else {
-    updateMusicButton();
-  }
-});
+if (localStorage.getItem("bgm") === "1") {
+  window.addEventListener("click", () => {
+    bgm.play().then(() => {
+      musicPlaying = true;
+      updateBtn();
+    });
+  }, { once: true });
+}
